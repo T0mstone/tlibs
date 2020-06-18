@@ -1,0 +1,10 @@
+[workspace]
+members = [
+    "bi_result",
+    "cargo_pkg_info",
+    "growable_iter",
+    "map_range",
+    "nonempty_vec",
+    "some_macros",
+    "vec_like",
+]
