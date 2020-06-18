@@ -1,3 +1,11 @@
+//! This crate provides some macros
+//!
+//! The `use-std` feature enables the following macros:
+//! - `vec_deque`
+//! - `hash_map`
+//! - `hash_set`
+//! - `dbgr`
+
 #![cfg_attr(not(feature = "use-std"), no_std)]
 
 /// Counts how many arguments it receives.
@@ -89,9 +97,9 @@ macro_rules! vec_deque {
 ///
 /// Optionally, you can start with the wanted type parameters
 /// ```
-/// # use some_macros::hashmap;
+/// # use some_macros::hash_map;
 /// # use std::collections::HashMap;
-/// let hm = hashmap!(use HashMap<i32, _>;
+/// let hm = hash_map!(use HashMap<i32, _>;
 ///     0u8 => 1,
 ///     1 => 2,
 ///     2 => 3
@@ -104,7 +112,7 @@ macro_rules! vec_deque {
 /// ```
 #[cfg(feature = "use_std")]
 #[macro_export]
-macro_rules! hashmap {
+macro_rules! hash_map {
     ( $(use HashMap<$tk:ty, $tv:ty>;)? $($key:expr => $value:expr),*$(,)? ) => {
         {
             let mut m = std::collections::HashMap$(::<$tk, $tv>)?::with_capacity($crate::count_args!($(($key)),*));
@@ -138,9 +146,9 @@ macro_rules! hashmap {
 ///
 /// Optionally, you can start with the wanted type parameters
 /// ```
-/// # use some_macros::hashset;
+/// # use some_macros::hash_set;
 /// # use std::collections::HashSet;
-/// let hm = hashset!(use HashSet<i32>;
+/// let hm = hash_set!(use HashSet<i32>;
 ///     0u8,
 ///     1,
 ///     2
@@ -153,7 +161,7 @@ macro_rules! hashmap {
 /// ```
 #[cfg(feature = "use_std")]
 #[macro_export]
-macro_rules! hashset {
+macro_rules! hash_set {
     ( $(use HashSet<$t:ty>;)? $($e:expr),*$(,)? ) => {
         {
             let mut m = std::collections::HashSet$(::<$t>)?::with_capacity($crate::count_args!($(($e)),*));

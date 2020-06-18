@@ -1,7 +1,15 @@
+//! This crate provides the [`GrowableIterator`](struct.GrowableIterator.html) struct.
+
 use core::iter::FusedIterator;
 use std::convert::Infallible;
 use vec_like::*;
 
+/// An iterator that can grow to both sides after creation
+///
+/// # Generic parameters
+/// `I` is the inner iterator,
+/// `F` is the type that will be used as storage for growth to the front and
+/// `B` is the type that will be used as storage for growth to the back
 pub struct GrowableIterator<I: Iterator, F, B> {
     front: F,
     iter: I,
@@ -50,7 +58,9 @@ where
     }
 }
 
+/// A trait to create a `GrowableIterator` from a regular `FusedIterator`
 pub trait Growable: FusedIterator + Sized {
+    /// creates a `GrowableIterator` from `self`, `front` and `back`
     fn growable<F, B>(self, front: F, back: B) -> GrowableIterator<Self, F, B> {
         GrowableIterator {
             front,

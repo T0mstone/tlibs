@@ -1,3 +1,5 @@
+//! This crate provides the [`MapRange`](struct.MapRange) struct.
+
 use std::ops::{Add, Div, Mul, Sub};
 
 /// A struct for mapping ranges linearly

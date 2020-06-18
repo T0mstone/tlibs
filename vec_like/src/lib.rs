@@ -1,31 +1,54 @@
+//! This crate provides some traits that capture behaviour
+//! which some `Vec`-like structs have in common.
+
 #![cfg_attr(not(feature = "use-std"), no_std)]
 use core::convert::Infallible;
 
+/// Add an element to the front of the list
 pub trait PushFront<T> {
+    /// The type of the failure value
+    ///
+    /// A sensible default is using `T` itself and
+    /// returning the argument unmodified
     type Err;
 
+    /// Try to add an element to the front of the list.
     fn push_front(&mut self, t: T) -> Result<(), Self::Err>;
 }
 
+/// Add an element to the back of the list
 pub trait PushBack<T> {
+    /// The type of the failure value
+    ///
+    /// A sensible default is using `T` itself and
+    /// returning the argument unmodified
     type Err;
 
+    /// Try to add an element to the back of the list.
     fn push_back(&mut self, t: T) -> Result<(), Self::Err>;
 }
 
+/// Remove an element from the front of the list
 pub trait PopFront<T> {
+    /// Try to remove an element from the front of the list.
     fn pop_front(&mut self) -> Option<T>;
 }
 
+/// Remove an element from the back of the list
 pub trait PopBack<T> {
+    /// Try to remove an element from the back of the list.
     fn pop_back(&mut self) -> Option<T>;
 }
 
+/// Get the element at the front of the list
 pub trait PeekFront<T: ?Sized> {
+    /// Try to get the element at the front of the list.
     fn peek_front(&mut self) -> Option<&T>;
 }
 
+/// Get the element at the back of the list
 pub trait PeekBack<T: ?Sized> {
+    /// Try to get the element at the back of the list.
     fn peek_back(&mut self) -> Option<&T>;
 }
 

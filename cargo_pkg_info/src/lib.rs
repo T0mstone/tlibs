@@ -1,4 +1,7 @@
+//! This crate provides some data structures for working with cargo package information,
+//! as well as functionality to obtain said info about the current (your) package
 #![no_std]
+
 use core::cmp::Ordering;
 use core::env;
 

@@ -1,3 +1,5 @@
+//! This crate provides a `Vec`-like struct that cannot be empty
+
 use std::marker::PhantomData;
 use std::mem;
 use std::num::NonZeroUsize;
