@@ -13,15 +13,23 @@ mod private {
 }
 
 /// Specifies the location the head item has in relation to the rest
-pub trait HeadLocation: self::private::Sealed {}
+pub trait HeadLocation: self::private::Sealed {
+    /// This constant can be used to write code generic over `HeadLocation`
+    /// without explicit casing
+    const HEAD_FIRST: bool;
+}
 
 /// The head item is in front of the rest (at index `0`)
 pub enum HeadFirst {}
 /// The head item is after the rest (at index `len-1`)
 pub enum HeadLast {}
 
-impl HeadLocation for HeadFirst {}
-impl HeadLocation for HeadLast {}
+impl HeadLocation for HeadFirst {
+    const HEAD_FIRST: bool = true;
+}
+impl HeadLocation for HeadLast {
+    const HEAD_FIRST: bool = false;
+}
 
 /// A `Vec` that always has at least one element
 #[derive(Default, Debug, Clone, Eq, PartialEq)]
@@ -42,6 +50,17 @@ impl<T, H: HeadLocation> NonemptyVec<T, H> {
         }
     }
 
+    /// The `head` is simply the element guaranteed to exist.
+    /// It is not necessarily interpreted as the first item
+    pub fn head(&self) -> &T {
+        &self.head
+    }
+
+    /// Like `head` but mutable
+    pub fn head_mut(&mut self) -> &mut T {
+        &mut self.head
+    }
+
     /// Consumes `self` and returns the head
     pub fn into_head(self) -> T {
         self.head
@@ -55,58 +74,142 @@ impl<T, H: HeadLocation> NonemptyVec<T, H> {
         // Saftey: as you can see, this is always at leats 1
         unsafe { NonZeroUsize::new_unchecked(self.body.len().saturating_add(1)) }
     }
-}
 
-impl<T> NonemptyVec<T, HeadLast> {
-    /// Sets `self.head` to `t`, pushing the old `self.head` back by `1`
+    // section: head-location specific functions
+    // the optimizer will optimize out the constant checks
+
+    /// Pushes an element to the end of `self`
     pub fn push(&mut self, t: T) {
-        self.body.push(mem::replace(&mut self.head, t));
+        if H::HEAD_FIRST {
+            self.body.push(t);
+        } else {
+            self.body.push(mem::replace(&mut self.head, t));
+        }
     }
 
-    /// Returns `self.head`, then sets `self.head` to the new last item.
-    ///
-    /// Returns `None` if there is only the head left
+    /// Removes the last element from `self`
+    /// (unless `self` has only one item left), returns it.
     pub fn pop(&mut self) -> Option<T> {
-        self.body
-            .pop()
-            .map(|new_head| mem::replace(&mut self.head, new_head))
+        if H::HEAD_FIRST {
+            self.body.pop()
+        } else {
+            self.body
+                .pop()
+                .map(|new_head| mem::replace(&mut self.head, new_head))
+        }
     }
 
-    /// Returns the current last element, consuming `self`
-    pub fn into_pop(mut self) -> T {
-        self.pop().unwrap_or_else(|| self.into_head())
+    /// Inserts an element at the specified index
+    pub fn insert(&mut self, index: usize, element: T) {
+        assert!(
+            index <= self.len().get(),
+            "insertion index (is {}) should be <= len (is {})",
+            index,
+            self.len()
+        );
+        if H::HEAD_FIRST {
+            if index == 0 {
+                let tmp = std::mem::replace(&mut self.head, element);
+                self.body.insert(0, tmp);
+            } else {
+                self.body.insert(index - 1, element);
+            }
+        } else if index == self.len().get() {
+            self.push(element);
+        } else {
+            self.body.insert(index, element);
+        }
     }
 
-    /// Creates a `Vec` from all its elements
-    pub fn into_vec(self) -> Vec<T> {
-        let mut res = self.body;
-        res.push(self.head);
-        res
-    }
-}
-
-impl<T> NonemptyVec<T, HeadFirst> {
-    /// Pushes an item to the end of `self`
-    pub fn push(&mut self, t: T) {
-        self.body.push(t)
-    }
-
-    /// Returns the last item in `self` (removing it)
-    ///
-    /// Returns `None` if there is only the head left
-    pub fn pop(&mut self) -> Option<T> {
-        self.body.pop()
-    }
-
-    /// Returns the current last element, consuming `self`
-    pub fn into_pop(mut self) -> T {
-        self.pop().unwrap_or_else(|| self.into_head())
+    /// Removes an element from the specified index;
+    /// Returns `None` if there is only one element left
+    pub fn remove(&mut self, index: usize) -> Option<T> {
+        assert!(
+            index <= self.len().get(),
+            "removal index (is {}) should be <= len (is {})",
+            index,
+            self.len()
+        );
+        if self.len().get() == 1 {
+            return None;
+        }
+        Some(if H::HEAD_FIRST {
+            if index == 0 {
+                std::mem::replace(&mut self.head, self.body.remove(0))
+            } else {
+                self.body.remove(index - 1)
+            }
+        } else if index == self.len().get() {
+            self.pop()?
+        } else {
+            self.body.remove(index)
+        })
     }
 
     /// Creates a `Vec` from all its elements
     pub fn into_vec(mut self) -> Vec<T> {
-        let mut res = vec![self.head];
-        res.append(&mut self.body);
+        let mut res;
+        if H::HEAD_FIRST {
+            res = vec![self.head];
+            res.append(&mut self.body);
+        } else {
+            res = self.body;
+            res.push(self.head);
+        }
         res
+    }
+
+    /// The first element
+    pub fn first(&self) -> &T {
+        if H::HEAD_FIRST {
+            &self.head
+        } else {
+            self.body.first().unwrap_or(&self.head)
+        }
+    }
+
+    /// The first element, mutable
+    pub fn first_mut(&mut self) -> &mut T {
+        if H::HEAD_FIRST {
+            &mut self.head
+        } else {
+            self.body.first_mut().unwrap_or(&mut self.head)
+        }
+    }
+
+    /// Returns the current first element, consuming `self`
+    pub fn into_first(mut self) -> T {
+        if H::HEAD_FIRST || self.body.is_empty() {
+            self.head
+        } else {
+            self.body.remove(0)
+        }
+    }
+
+    /// The last element
+    pub fn last(&self) -> &T {
+        if H::HEAD_FIRST {
+            self.body.last().unwrap_or(&self.head)
+        } else {
+            &self.head
+        }
+    }
+
+    /// The last element, mutable
+    pub fn last_mut(&mut self) -> &mut T {
+        if H::HEAD_FIRST {
+            self.body.last_mut().unwrap_or(&mut self.head)
+        } else {
+            &mut self.head
+        }
+    }
+
+    /// Returns the current last element, consuming `self`
+    pub fn into_last(mut self) -> T {
+        if H::HEAD_FIRST {
+            self.body.pop().unwrap_or(self.head)
+        } else {
+            self.head
+        }
     }
 }

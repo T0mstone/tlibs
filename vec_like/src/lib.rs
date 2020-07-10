@@ -55,7 +55,8 @@ pub trait PeekBack<T: ?Sized> {
 #[cfg(feature = "use-std")]
 mod std_impls {
     use super::*;
-    use std::collections::VecDeque;
+    use nonempty_vec::NonemptyVec;
+    use std::collections::{LinkedList, VecDeque};
 
     // section: impl Vec
 
@@ -105,6 +106,50 @@ mod std_impls {
         }
     }
 
+    // section: impl NonemptyVec
+
+    impl<T> PushFront<T> for NonemptyVec<T> {
+        type Err = Infallible;
+
+        fn push_front(&mut self, t: T) -> Result<(), Self::Err> {
+            self.insert(0, t);
+            Ok(())
+        }
+    }
+
+    impl<T> PushBack<T> for NonemptyVec<T> {
+        type Err = Infallible;
+
+        fn push_back(&mut self, t: T) -> Result<(), Self::Err> {
+            self.push(t);
+            Ok(())
+        }
+    }
+
+    impl<T> PopFront<T> for NonemptyVec<T> {
+        fn pop_front(&mut self) -> Option<T> {
+            self.remove(0)
+        }
+    }
+
+    impl<T> PopBack<T> for NonemptyVec<T> {
+        fn pop_back(&mut self) -> Option<T> {
+            self.pop()
+        }
+    }
+
+    impl<T> PeekBack<T> for NonemptyVec<T> {
+        fn peek_back(&mut self) -> Option<&T> {
+            Some(self.last())
+        }
+    }
+
+    impl<T> PeekFront<T> for NonemptyVec<T> {
+        fn peek_front(&mut self) -> Option<&T> {
+            Some(self.first())
+        }
+    }
+
     // section: impl VecDeque
 
     impl<T> PushFront<T> for VecDeque<T> {
@@ -146,6 +191,50 @@ mod std_impls {
     impl<T> PeekFront<T> for VecDeque<T> {
         fn peek_front(&mut self) -> Option<&T> {
             self.front()
+        }
+    }
+
+    // section: impl LinkedList
+
+    impl<T> PushFront<T> for LinkedList<T> {
+        type Err = ();
+
+        fn push_front(&mut self, t: T) -> Result<(), Self::Err> {
+            self.push_front(t);
+            Ok(())
+        }
+    }
+
+    impl<T> PushBack<T> for LinkedList<T> {
+        type Err = ();
+
+        fn push_back(&mut self, t: T) -> Result<(), Self::Err> {
+            self.push_back(t);
+            Ok(())
+        }
+    }
+
+    impl<T> PopFront<T> for LinkedList<T> {
+        fn pop_front(&mut self) -> Option<T> {
+            self.pop_front()
+        }
+    }
+
+    impl<T> PopBack<T> for LinkedList<T> {
+        fn pop_back(&mut self) -> Option<T> {
+            self.pop_back()
+        }
+    }
+
+    impl<T> PeekFront<T> for LinkedList<T> {
+        fn peek_front(&mut self) -> Option<&T> {
+            self.front()
+        }
+    }
+
+    impl<T> PeekBack<T> for LinkedList<T> {
+        fn peek_back(&mut self) -> Option<&T> {
+            self.back()
         }
     }
 }

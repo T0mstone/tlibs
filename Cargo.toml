@@ -3,8 +3,10 @@ members = [
     "bi_result",
     "cargo_pkg_info",
     "growable_iter",
+    "infinite_iterators",
     "map_range",
     "nonempty_vec",
     "some_macros",
+    "span",
     "vec_like",
 ]

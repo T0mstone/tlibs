@@ -297,7 +297,8 @@ macro_rules! dbgr {
 ///     None => false,
 /// }
 /// ```
-/// you can just write `debug_lvl!(LIT >= MIN)`
+/// you can just write `debug_lvl!(LIT >= MIN)`.
+///
 /// This works with all comparison operators (`==`, `!=`, `>`, `<`, `>=`, `<=`)
 #[macro_export]
 macro_rules! debug_lvl {

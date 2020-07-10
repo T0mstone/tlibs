@@ -1,6 +1,6 @@
 [package]
 name = "vec_like"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["T0mstone <realt0mstone@gmail.com>"]
 edition = "2018"
 
@@ -8,6 +8,7 @@ edition = "2018"
 
 [features]
 default = ["use-std"]
-use-std = []
+use-std = ["nonempty_vec"]
 
 [dependencies]
+nonempty_vec = { path = "../nonempty_vec", optional = true }

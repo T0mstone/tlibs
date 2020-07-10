@@ -1,6 +1,6 @@
 [package]
-name = "nonempty_vec"
-version = "0.2.0"
+name = "infinite_iterators"
+version = "0.1.0"
 authors = ["T0mstone <realt0mstone@gmail.com>"]
 edition = "2018"
 
