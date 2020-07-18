@@ -1,7 +1,7 @@
 //! This crate provides the [`BiResult`](struct.BiResult.html) struct.
 #![no_std]
 
-use core::iter::{Chain, FromIterator, Map};
+use core::iter::{once, Chain, FromIterator, Map};
 
 /// A `Result`-like struct that always contains a value,
 /// and possibly some number of errors.
@@ -55,7 +55,7 @@ impl<T, I: IntoIterator> BiResult<T, I> {
 
     /// Composes two `BiResult`s by applying `f` to unify their values and
     /// by appending the errors from `rhs` to the errors from `self`.
-    pub fn and<U, V, F: FnOnce(T, U) -> V, J: IntoIterator<Item = I::Item>>(
+    pub fn join<U, V, F: FnOnce(T, U) -> V, J: IntoIterator<Item = I::Item>>(
         self,
         rhs: BiResult<U, J>,
         f: F,
@@ -64,6 +64,19 @@ impl<T, I: IntoIterator> BiResult<T, I> {
             f(self.0, rhs.0),
             self.1.into_iter().chain(rhs.1.into_iter()),
         )
+    }
+
+    /// Converts a `Result` to an `Option` by appending any `Err` value
+    /// to `self`'s errors
+    pub fn consume_err<U, E>(&mut self, r: Result<U, E>) -> Option<U>
+    where
+        I: Extend<E>,
+    {
+        r.or_else(|e| {
+            self.1.extend(once(e));
+            Err(())
+        })
+        .ok()
     }
 
     /// Composes the result of applying `f` onto the value of `self`
