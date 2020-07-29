@@ -22,9 +22,9 @@
 /// This is modtly useful as a helper for other macros
 #[macro_export]
 macro_rules! count_args {
-    (@single $($t:tt)*) => { () };
-    ($(($($x:tt)*)),*) => {
-        [$($crate::count_args!(@single $($x)*)),*].len()
+    (@one $($t:tt)*) => { 1 };
+    ($(($($x:tt)*)),*$(,)?) => {
+        0 $(+ $crate::count_args!(@one $($x)*))*
     };
 }
 

@@ -8,5 +8,6 @@ members = [
     "nonempty_vec",
     "some_macros",
     "span",
+    "type_list",
     "vec_like",
 ]
