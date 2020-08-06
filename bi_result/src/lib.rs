@@ -115,6 +115,18 @@ impl<T, I: IntoIterator> BiResult<T, I> {
         target.extend(self.1.into_iter().map(Into::into));
         self.0
     }
+
+    pub fn expect(self, msg: &str) -> T {
+        let n = self.1.into_iter().count();
+        if n > 0 {
+            panic!("{} ({} errors)", msg, n)
+        }
+        self.0
+    }
+
+    pub fn unwrap(self) -> T {
+        self.expect("called `BiResult::unwrap()` on a value with errors")
+    }
 }
 
 impl<VT, VI: IntoIterator, T, I: IntoIterator> FromIterator<BiResult<T, I>> for BiResult<VT, VI>
