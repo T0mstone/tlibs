@@ -1,0 +1,4 @@
+(function() {var implementors = {};
+implementors["growable_iter"] = [{"text":"impl&lt;T, I:&nbsp;<a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html\" title=\"trait core::iter::traits::iterator::Iterator\">Iterator</a>&lt;Item = T&gt;, F, B:&nbsp;<a class=\"trait\" href=\"vec_like/trait.PushBack.html\" title=\"trait vec_like::PushBack\">PushBack</a>&lt;T&gt;&gt; <a class=\"trait\" href=\"vec_like/trait.PushBack.html\" title=\"trait vec_like::PushBack\">PushBack</a>&lt;T&gt; for <a class=\"struct\" href=\"growable_iter/struct.GrowableIterator.html\" title=\"struct growable_iter::GrowableIterator\">GrowableIterator</a>&lt;I, F, B&gt;","synthetic":false,"types":["growable_iter::GrowableIterator"]}];
+implementors["vec_like"] = [];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

@@ -1,0 +1,1 @@
+initSidebarItems({"macro":[["het_list",""]],"mod":[["het_list","A heterogeneous list, based on `TypeList`"],["pure","A list consisting purely of types"]]});

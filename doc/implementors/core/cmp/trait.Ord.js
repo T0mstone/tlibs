@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["cargo_pkg_info"] = [{"text":"impl&lt;'a&gt; <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html\" title=\"trait core::cmp::Ord\">Ord</a> for <a class=\"struct\" href=\"cargo_pkg_info/struct.CargoPackageVersion.html\" title=\"struct cargo_pkg_info::CargoPackageVersion\">CargoPackageVersion</a>&lt;'a&gt;","synthetic":false,"types":["cargo_pkg_info::CargoPackageVersion"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

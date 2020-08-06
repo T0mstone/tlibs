@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["span"] = [{"text":"impl&lt;T&gt; <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/ops/index/trait.Index.html\" title=\"trait core::ops::index::Index\">Index</a>&lt;<a class=\"struct\" href=\"span/struct.Span.html\" title=\"struct span::Span\">Span</a>&gt; for [T]","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

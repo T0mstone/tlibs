@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["PeekBack","Get the element at the back of the list"],["PeekFront","Get the element at the front of the list"],["PopBack","Remove an element from the back of the list"],["PopFront","Remove an element from the front of the list"],["PushBack","Add an element to the back of the list"],["PushFront","Add an element to the front of the list"]]});

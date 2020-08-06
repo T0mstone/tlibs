@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["MapRange","A struct for mapping ranges linearly"]]});

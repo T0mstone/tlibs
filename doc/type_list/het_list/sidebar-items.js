@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["cons",""]],"struct":[["Cons",""],["Nil",""]],"trait":[["AppendItem",""],["HetList",""]],"type":[["Append",""]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["BiResult","A `Result`-like struct that always contains a value, and possibly some number of errors."]]});

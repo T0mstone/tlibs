@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["decaying",""],["from_fn",""],["successors",""],["true_once",""]],"mod":[["iters",""]],"struct":[["Decaying",""],["FromFn",""],["Successors",""]],"trait":[["ChainInfinite",""],["InfiniteIterator","An iterator that never ends"],["PromiseInfinite","Promote an iterator to an infinite iterator"]]});

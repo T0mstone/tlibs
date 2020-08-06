@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["GrowableIterator","An iterator that can grow to both sides after creation"]],"trait":[["Growable","A trait to create a `GrowableIterator` from a regular `FusedIterator`"]]});

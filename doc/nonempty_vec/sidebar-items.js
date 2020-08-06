@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["HeadFirst","The head item is in front of the rest (at index `0`)"],["HeadLast","The head item is after the rest (at index `len-1`)"]],"struct":[["NonemptyVec","A `Vec` that always has at least one element"]],"trait":[["HeadLocation","Specifies the location the head item has in relation to the rest"]]});

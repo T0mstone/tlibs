@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["CargoProfile","A Cargo compilation profile"]],"struct":[["CargoPackageInfo","Information about a Cargo package"],["CargoPackageVersion","The version of a Cargo package (with major, minor and patch version)"]]});
