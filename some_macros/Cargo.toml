@@ -1,6 +1,6 @@
 [package]
 name = "some_macros"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["T0mstone <realt0mstone@gmail.com>"]
 edition = "2018"
 
