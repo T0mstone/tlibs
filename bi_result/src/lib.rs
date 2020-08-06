@@ -72,9 +72,8 @@ impl<T, I: IntoIterator> BiResult<T, I> {
     where
         I: Extend<E>,
     {
-        r.or_else(|e| {
+        r.map_err(|e| {
             self.1.extend(once(e));
-            Err(())
         })
         .ok()
     }

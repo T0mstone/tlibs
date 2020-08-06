@@ -2,6 +2,7 @@
 members = [
     "bi_result",
     "cargo_pkg_info",
+    "direction",
     "growable_iter",
     "infinite_iterators",
     "map_range",

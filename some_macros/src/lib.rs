@@ -63,7 +63,7 @@ macro_rules! count_args {
 /// control.push_back(3);
 /// assert_eq!(vd, control);
 /// ```
-#[cfg(feature = "use_std")]
+#[cfg(feature = "use-std")]
 #[macro_export]
 macro_rules! vec_deque {
      ( $(use VecDeque<$t:ty>;)? $($e:expr),*$(,)? ) => {
@@ -110,7 +110,7 @@ macro_rules! vec_deque {
 /// control.insert(2, 3);
 /// assert_eq!(hm, control);
 /// ```
-#[cfg(feature = "use_std")]
+#[cfg(feature = "use-std")]
 #[macro_export]
 macro_rules! hash_map {
     ( $(use HashMap<$tk:ty, $tv:ty>;)? $($key:expr => $value:expr),*$(,)? ) => {
@@ -159,7 +159,7 @@ macro_rules! hash_map {
 /// control.insert(2);
 /// assert_eq!(hm, control);
 /// ```
-#[cfg(feature = "use_std")]
+#[cfg(feature = "use-std")]
 #[macro_export]
 macro_rules! hash_set {
     ( $(use HashSet<$t:ty>;)? $($e:expr),*$(,)? ) => {
@@ -198,7 +198,7 @@ macro_rules! hash_set {
 /// dbgr!(# <any literal>); // prints "[<file>@<line>] <the literal, debug pretty printed>" (only works with a single literal)
 /// dbgr!(: <any literal>); // prints "[<file>@<line>] <the literal, display printed>" (only works with a single literal)
 /// ```
-#[cfg(feature = "use_std")]
+#[cfg(feature = "use-std")]
 #[macro_export]
 macro_rules! dbgr {
     () => {
@@ -331,4 +331,33 @@ macro_rules! debug_lvl {
             None => false,
         }
     }};
+}
+
+/// A macro that returns the first set of token trees it gets
+///
+/// Syntax: `alt!((...) (...) (...) ...)`
+///
+/// Calling `alt` without args (`alt!()`) will result in an empty output
+///
+/// ## Use Cases
+/// One Use case is for providing default values in macro arguments
+/// ```
+/// # use some_macros::alt;
+/// macro_rules! m {
+///     ($($a:expr)?) => {
+///         alt!($(($a))? "default")
+///     }
+/// }
+///
+/// fn main() {
+///     assert_eq!(m!(), "default");
+///     assert_eq!(m!("other"), "other");
+/// }
+/// ```
+#[macro_export]
+macro_rules! alt {
+    () => {};
+    (($($t:tt)*) $(($($_:tt)*))*) => {
+    	$($t:tt)*
+    };
 }
