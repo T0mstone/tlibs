@@ -1,6 +1,6 @@
 [package]
 name = "bi_result"
-version = "0.4.1"
+version = "0.4.2"
 authors = ["T0mstone <realt0mstone@gmail.com>"]
 edition = "2018"
 

@@ -143,22 +143,51 @@ where
     }
 }
 
-pub trait ResultExt<T, E> {
+pub trait ResultExt<T, E>: Sized {
     fn into_bi_result<I>(self) -> BiResult<T, I>
     where
         T: Default,
-        I: Default + FromIterator<E> + IntoIterator<Item = E>;
+        I: Default + Extend<E> + IntoIterator<Item = E>;
+
+    fn push_error<I>(self, errs: &mut I) -> Option<T>
+    where
+        I: Extend<E>;
+
+    fn push_error_or_default<I>(self, errs: &mut I) -> T
+    where
+        T: Default,
+        I: Extend<E>,
+    {
+        self.push_error(errs).unwrap_or_default()
+    }
 }
 
 impl<T, E> ResultExt<T, E> for Result<T, E> {
     fn into_bi_result<I>(self) -> BiResult<T, I>
     where
         T: Default,
-        I: Default + FromIterator<E> + IntoIterator<Item = E>,
+        I: Default + Extend<E> + IntoIterator<Item = E>,
     {
         match self {
-            Ok(x) => BiResult::ok(x),
-            Err(e) => BiResult::err(once(e).collect()),
+            Ok(t) => BiResult::ok(t),
+            Err(e) => BiResult::err({
+                let mut tmp = I::default();
+                tmp.extend(once(e));
+                tmp
+            }),
+        }
+    }
+
+    fn push_error<I>(self, errs: &mut I) -> Option<T>
+    where
+        I: Extend<E>,
+    {
+        match self {
+            Ok(t) => Some(t),
+            Err(e) => {
+                errs.extend(once(e));
+                None
+            }
         }
     }
 }
