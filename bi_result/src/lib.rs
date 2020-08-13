@@ -142,3 +142,23 @@ where
         BiResult(t, i)
     }
 }
+
+pub trait ResultExt<T, E> {
+    fn into_bi_result<I>(self) -> BiResult<T, I>
+    where
+        T: Default,
+        I: Default + FromIterator<E> + IntoIterator<Item = E>;
+}
+
+impl<T, E> ResultExt<T, E> for Result<T, E> {
+    fn into_bi_result<I>(self) -> BiResult<T, I>
+    where
+        T: Default,
+        I: Default + FromIterator<E> + IntoIterator<Item = E>,
+    {
+        match self {
+            Ok(x) => BiResult::ok(x),
+            Err(e) => BiResult::err(once(e).collect()),
+        }
+    }
+}
