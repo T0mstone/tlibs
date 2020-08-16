@@ -1,1 +1,1 @@
-initSidebarItems({"macro":[["het_list",""]],"mod":[["het_list","A heterogeneous list, based on `TypeList`"],["pure","A list consisting purely of types"]]});
+initSidebarItems({"macro":[["het_list","A macro that creates a heterogeneous list. The syntax is like `vec!`"],["type_list","A macro that creates a type list. The syntax is like `vec!`, but with types"]],"mod":[["het_list","A heterogeneous list"],["type_list","A list consisting purely of types"]]});

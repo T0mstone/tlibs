@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["BiResult","A `Result`-like struct that always contains a value, and possibly some number of errors."]]});
+initSidebarItems({"struct":[["BiResult","A `Result`-like struct that always contains a value, and possibly some number of errors."]],"trait":[["ResultExt","Extensions to the `Result` type"]]});

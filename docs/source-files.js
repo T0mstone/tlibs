@@ -8,6 +8,6 @@ sourcesIndex["map_range"] = {"name":"","files":["lib.rs"]};
 sourcesIndex["nonempty_vec"] = {"name":"","files":["lib.rs"]};
 sourcesIndex["some_macros"] = {"name":"","files":["lib.rs"]};
 sourcesIndex["span"] = {"name":"","files":["lib.rs"]};
-sourcesIndex["type_list"] = {"name":"","files":["het_list.rs","lib.rs","pure.rs"]};
+sourcesIndex["type_list"] = {"name":"","files":["het_list.rs","lib.rs","type_list.rs"]};
 sourcesIndex["vec_like"] = {"name":"","files":["lib.rs"]};
 createSourceSidebar();

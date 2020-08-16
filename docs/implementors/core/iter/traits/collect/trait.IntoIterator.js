@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["nonempty_vec"] = [{"text":"impl&lt;T&gt; <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/iter/traits/collect/trait.IntoIterator.html\" title=\"trait core::iter::traits::collect::IntoIterator\">IntoIterator</a> for <a class=\"struct\" href=\"nonempty_vec/struct.NonemptyVec.html\" title=\"struct nonempty_vec::NonemptyVec\">NonemptyVec</a>&lt;T&gt;","synthetic":false,"types":["nonempty_vec::NonemptyVec"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

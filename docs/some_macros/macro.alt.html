@@ -12,7 +12,7 @@
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">m</span> {
     ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">a</span>:<span class="ident">expr</span>)<span class="question-mark">?</span>) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="macro">alt</span><span class="macro">!</span>($((<span class="macro-nonterminal">$</span><span class="macro-nonterminal">a</span>))<span class="question-mark">?</span> <span class="string">&quot;default&quot;</span>)
+        <span class="macro">alt</span><span class="macro">!</span>($((<span class="macro-nonterminal">$</span><span class="macro-nonterminal">a</span>))<span class="question-mark">?</span> (<span class="string">&quot;default&quot;</span>))
     }
 }
 
