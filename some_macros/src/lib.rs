@@ -81,9 +81,9 @@ macro_rules! vec_deque {
 ///
 /// Example:
 /// ```
-/// # use some_macros::hashmap;
+/// # use some_macros::hash_map;
 /// # use std::collections::HashMap;
-/// let hm = hashmap!(
+/// let hm = hash_map!(
 ///     0 => 1,
 ///     1 => 2,
 ///     2 => 3
@@ -130,9 +130,9 @@ macro_rules! hash_map {
 ///
 /// Example:
 /// ```
-/// # use some_macros::hashset;
+/// # use some_macros::hash_set;
 /// # use std::collections::HashSet;
-/// let hm = hashset!(
+/// let hm = hash_set!(
 ///     0,
 ///     1,
 ///     2
@@ -357,7 +357,7 @@ macro_rules! debug_lvl {
 #[macro_export]
 macro_rules! alt {
     () => {};
-    (($($t:tt)*) $(($($_:tt)*))*) => {
-    	$($t:tt)*
+    (($($t:tt)*) $(($($r:tt)*))*) => {
+    	$($t)*
     };
 }
