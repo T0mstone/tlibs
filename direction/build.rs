@@ -1,3 +1,4 @@
+#![allow(missing_docs)]
 use some_macros::hash_map;
 use std::collections::HashMap;
 

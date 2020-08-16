@@ -116,6 +116,7 @@ impl<T, I: IntoIterator> BiResult<T, I> {
         self.0
     }
 
+    /// returns `self.0`, panics with the provided message if there are any errors
     pub fn expect(self, msg: &str) -> T {
         let n = self.1.into_iter().count();
         if n > 0 {
@@ -124,6 +125,7 @@ impl<T, I: IntoIterator> BiResult<T, I> {
         self.0
     }
 
+    /// Like `expect`, but with a default error message
     pub fn unwrap(self) -> T {
         self.expect("called `BiResult::unwrap()` on a value with errors")
     }
@@ -143,16 +145,20 @@ where
     }
 }
 
+/// Extensions to the `Result` type
 pub trait ResultExt<T, E>: Sized {
+    /// Convert a `Result` to a `BiResult`
     fn into_bi_result<I>(self) -> BiResult<T, I>
     where
         T: Default,
         I: Default + Extend<E> + IntoIterator<Item = E>;
 
+    /// push the error in an `Err(_)` onto a collection, returning an `Option`
     fn push_error<I>(self, errs: &mut I) -> Option<T>
     where
         I: Extend<E>;
 
+    /// push the error in an `Err(_)` onto a collection, returning the value from an `Ok(_)` or `T::default()` otherwise
     fn push_error_or_default<I>(self, errs: &mut I) -> T
     where
         T: Default,

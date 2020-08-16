@@ -66,10 +66,32 @@ impl<T, H: HeadLocation> NonemptyVec<T, H> {
         self.head
     }
 
+    /// The `tail` is simply all elements that are not guaranteed to exist
+    pub fn tail(&self) -> &[T] {
+        &self.body
+    }
+
+    /// Like `tail` but mutable
+    pub fn tail_mut(&mut self) -> &mut Vec<T> {
+        &mut self.body
+    }
+
+    /// Consumes `self` and returns the tail
+    pub fn into_tail(self) -> Vec<T> {
+        self.body
+    }
+
+    /// Consumes `self` and returns the head and the tail
+    pub fn into_head_tail(self) -> (T, Vec<T>) {
+        (self.head, self.body)
+    }
+
     /// Returns the length of `self`
     ///
     /// # Edge Case
     /// The length can be `usize::MAX + 1` - in that case, only `usize::MAX` is returned
+    ///
+    /// To circumvent this, you can work with `self.tail().len()`, which is always one less than `self.len()`
     pub fn len(&self) -> NonZeroUsize {
         // Saftey: as you can see, this is always at leats 1
         unsafe { NonZeroUsize::new_unchecked(self.body.len().saturating_add(1)) }
@@ -211,5 +233,14 @@ impl<T, H: HeadLocation> NonemptyVec<T, H> {
         } else {
             self.head
         }
+    }
+}
+
+impl<T> IntoIterator for NonemptyVec<T> {
+    type Item = T;
+    type IntoIter = std::vec::IntoIter<T>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.into_vec().into_iter()
     }
 }

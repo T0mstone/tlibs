@@ -302,17 +302,17 @@ macro_rules! dbgr {
 /// This works with all comparison operators (`==`, `!=`, `>`, `<`, `>=`, `<=`)
 #[macro_export]
 macro_rules! debug_lvl {
-    (@tok >= $a:expr, $b:expr) => {
-        $a >= $b
-    };
-    (@tok <= $a:expr, $b:expr) => {
-        $a <= $b
-    };
     (@tok == $a:expr, $b:expr) => {
         $a == $b
     };
     (@tok != $a:expr, $b:expr) => {
         $a != $b
+    };
+    (@tok >= $a:expr, $b:expr) => {
+        $a >= $b
+    };
+    (@tok <= $a:expr, $b:expr) => {
+        $a <= $b
     };
     (@tok > $a:expr, $b:expr) => {
         $a > $b
@@ -345,7 +345,7 @@ macro_rules! debug_lvl {
 /// # use some_macros::alt;
 /// macro_rules! m {
 ///     ($($a:expr)?) => {
-///         alt!($(($a))? "default")
+///         alt!($(($a))? ("default"))
 ///     }
 /// }
 ///

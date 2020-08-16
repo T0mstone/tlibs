@@ -1,6 +1,6 @@
-// todo: documentation
+//! Heterogeneous lists, with or without values (the latter being just a list of types)
 
-/// A heterogeneous list, based on `TypeList`
+/// A heterogeneous list
 pub mod het_list;
 /// A list consisting purely of types
-pub mod pure;
+pub mod type_list;
