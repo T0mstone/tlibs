@@ -445,9 +445,9 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Example:</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// # use some_macros::hashmap;</span>
+<span class="doccomment">/// # use some_macros::hash_map;</span>
 <span class="doccomment">/// # use std::collections::HashMap;</span>
-<span class="doccomment">/// let hm = hashmap!(</span>
+<span class="doccomment">/// let hm = hash_map!(</span>
 <span class="doccomment">///     0 =&gt; 1,</span>
 <span class="doccomment">///     1 =&gt; 2,</span>
 <span class="doccomment">///     2 =&gt; 3</span>
@@ -494,9 +494,9 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Example:</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// # use some_macros::hashset;</span>
+<span class="doccomment">/// # use some_macros::hash_set;</span>
 <span class="doccomment">/// # use std::collections::HashSet;</span>
-<span class="doccomment">/// let hm = hashset!(</span>
+<span class="doccomment">/// let hm = hash_set!(</span>
 <span class="doccomment">///     0,</span>
 <span class="doccomment">///     1,</span>
 <span class="doccomment">///     2</span>
@@ -721,8 +721,8 @@
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">alt</span> {
     () <span class="op">=</span><span class="op">&gt;</span> {};
-    (($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) $(($(<span class="macro-nonterminal">$</span><span class="kw">_</span>:<span class="macro-nonterminal">tt</span>)<span class="kw-2">*</span>))<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> {
-    	$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="op">*</span>
+    (($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) $(($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">r</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>))<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    	$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>)<span class="op">*</span>
     };
 }
 </pre></div>
