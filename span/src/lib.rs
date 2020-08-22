@@ -1,7 +1,8 @@
 //! This crate provides the [`Span`](struct.Span.html) struct.
 #![no_std]
 
-use core::ops::{Index, IndexMut, Range};
+use core::cmp::Ordering;
+use core::ops::{Deref, DerefMut, Index, IndexMut, Range};
 
 /// A `Span` is basically like a `Range<usize>`
 /// but it has some additional methods and functionality
@@ -102,5 +103,44 @@ impl<T> IndexMut<Span> for [T] {
     #[inline]
     fn index_mut(&mut self, index: Span) -> &mut Self::Output {
         self.index_mut(index.as_range())
+    }
+}
+
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
+pub struct Spanned<T> {
+    pub span: Span,
+    pub inner: T,
+}
+
+impl<T> Spanned<T> {
+    pub fn new(span: Span, inner: T) -> Self {
+        Self { span, inner }
+    }
+}
+
+impl<T: PartialOrd> PartialOrd for Spanned<T> {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        self.inner.partial_cmp(&other.inner)
+    }
+}
+
+// the redundant PartialOrd here is due to my IDE
+impl<T: PartialOrd + Ord> Ord for Spanned<T> {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.inner.cmp(&other.inner)
+    }
+}
+
+impl<T> Deref for Spanned<T> {
+    type Target = T;
+
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+
+impl<T> DerefMut for Spanned<T> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
