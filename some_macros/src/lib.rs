@@ -335,9 +335,17 @@ macro_rules! debug_lvl {
 
 /// A macro that returns the first set of token trees it gets
 ///
-/// Syntax: `alt!((...) (...) (...) ...)`
+/// ## Syntax
+/// The syntax is based on choosing the first from a list.
+/// Usually, this list is quite simple.
 ///
-/// Calling `alt` without args (`alt!()`) will result in an empty output
+/// You specify a macro variable type up front, e.g. `alt!(tt; (tt1) (tt2) (tt3) ...)`
+///
+/// `tt` is the only one for which you have to parenthesize each element.\
+/// Simply repeated without delimeter (`alt!(<T>; x1 x2 x3 ...)`) are: `item`, `block`, `ident`, `meta`, `lifetime`, `literal`\
+/// Repeated with comma delimeter (`alt!(<T>; x1, x2, x3, ...)`) are: `expr`, `stmt`, `pat`, `ty`, `path`, `vis`
+///
+/// Calling `alt` without args (`alt!(<T>;)`) will result in an empty output
 ///
 /// ## Use Cases
 /// One Use case is for providing default values in macro arguments
@@ -345,19 +353,62 @@ macro_rules! debug_lvl {
 /// # use some_macros::alt;
 /// macro_rules! m {
 ///     ($($a:expr)?) => {
-///         alt!($(($a))? ("default"))
+///         alt!(tt; $(($a))? ("default"))
+///     }
+/// }
+/// macro_rules! m2 {
+///     ($($a:expr)?) => {
+///         alt!(expr; $($a,)? "default")
 ///     }
 /// }
 ///
 /// fn main() {
 ///     assert_eq!(m!(), "default");
 ///     assert_eq!(m!("other"), "other");
+///     assert_eq!(m2!(), "default");
+///     assert_eq!(m2!("other"), "other");
 /// }
 /// ```
 #[macro_export]
 macro_rules! alt {
-    () => {};
-    (($($t:tt)*) $(($($r:tt)*))*) => {
-    	$($t)*
+    (tt; ($($x:tt)*) $(($($r:tt)*))*) => {
+    	$($x)*
     };
+    (expr; $x:expr $(,$r:expr)*$(,)?) => {
+    	$x
+    };
+    (item; $x:item $($r:item)*) => {
+    	$x
+    };
+    (block; $x:block $($r:block)*) => {
+    	$x
+    };
+    (stmt; $x:stmt $(,$r:stmt)*$(,)?) => {
+		$x
+    };
+    (pat; $x:pat $(,$r:pat)*$(,)?) => {
+    	$x
+    };
+    (ty; $x:ty $(,$r:ty)*$(,)?) => {
+    	$x
+    };
+    (ident; $x:ident $($r:ident)*) => {
+		$x
+    };
+    (path; $x:path $(,$r:path)*$(,)?) => {
+    	$x
+    };
+    (meta; $x:meta $($r:meta)*) => {
+    	$x
+    };
+    (lifetime; $x:lifetime $($r:lifetime)*) => {
+    	$x
+    };
+    (vis; $x:vis $(,$r:vis)*$(,)?) => {
+    	$x
+    };
+    (literal; $x:literal $($r:literal)*) => {
+    	$x
+    };
+    ($i:ident;) => {};
 }
