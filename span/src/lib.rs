@@ -5,7 +5,7 @@ use core::ops::{Index, IndexMut, Range};
 
 /// A `Span` is basically like a `Range<usize>`
 /// but it has some additional methods and functionality
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 pub struct Span {
     start: usize,
     len: usize,
