@@ -74,6 +74,15 @@ impl Span {
             len: end - start,
         }
     }
+
+    /// Create a (the smallest) span that contains both all elements in `iter` (returns `None` iff `iter` is empty)
+    #[inline]
+    pub fn join_all<I: IntoIterator<Item = Self>>(iter: I) -> Option<Self> {
+        iter.into_iter().fold(None, |acc, x| match acc {
+            None => Some(x),
+            Some(l) => Some(Span::join(l, x)),
+        })
+    }
 }
 
 impl Into<Range<usize>> for Span {
