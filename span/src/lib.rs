@@ -8,8 +8,10 @@ use core::ops::{Deref, DerefMut, Index, IndexMut, Range};
 /// but it has some additional methods and functionality
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 pub struct Span {
-    start: usize,
-    len: usize,
+    /// The starting position
+    pub start: usize,
+    /// The length
+    pub len: usize,
 }
 
 impl Span {
