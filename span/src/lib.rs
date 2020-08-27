@@ -17,7 +17,7 @@ pub struct Span {
 impl Span {
     /// Creates a new `Span` from a start position and a length
     #[inline]
-    pub fn new(start: usize, len: usize) -> Self {
+    pub const fn new(start: usize, len: usize) -> Self {
         Self { start, len }
     }
 
@@ -32,31 +32,31 @@ impl Span {
 
     /// The start position
     #[inline]
-    pub fn start(&self) -> usize {
+    pub const fn start(&self) -> usize {
         self.start
     }
 
     /// The length
     #[inline]
-    pub fn len(&self) -> usize {
+    pub const fn len(&self) -> usize {
         self.len
     }
 
     /// Determines wheter the `Span` is empty, i.e. of length 0
     #[inline]
-    pub fn is_empty(&self) -> bool {
+    pub const fn is_empty(&self) -> bool {
         self.len == 0
     }
 
     /// The end position (the one-after-end index)
     #[inline]
-    pub fn end(&self) -> usize {
+    pub const fn end(&self) -> usize {
         self.start + self.len
     }
 
     /// Converts the `Span` to its equivalent `Range<usize>`
     #[inline]
-    pub fn as_range(&self) -> Range<usize> {
+    pub const fn as_range(&self) -> Range<usize> {
         self.start..self.end()
     }
 
@@ -124,7 +124,7 @@ pub struct Spanned<T> {
 }
 
 impl<T> Spanned<T> {
-    pub fn new(span: Span, inner: T) -> Self {
+    pub const fn new(span: Span, inner: T) -> Self {
         Self { span, inner }
     }
 }
