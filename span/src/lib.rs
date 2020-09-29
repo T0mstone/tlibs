@@ -85,6 +85,39 @@ impl Span {
             Some(l) => Some(Span::join(l, x)),
         })
     }
+
+    /// Split the span at a middle point
+    ///
+    /// Illustration: Split `Span::new(3, 4)` at `mid = 5`
+    /// ```text
+    /// 3[**|**]7 -> (3[**]5, 5[**]7)
+    /// ```
+    ///
+    /// Returns `Err(self)` if the midpoint is outside of `self`
+    pub fn split_at(self, mid: usize) -> Result<(Self, Self), Self> {
+        if self.start <= mid && mid <= self.end() {
+            Ok((
+                Span::new(self.start, mid),
+                Span::from_range(mid..self.end()),
+            ))
+        } else {
+            Err(self)
+        }
+    }
+
+    /// Like [`split_at`](#method.split_at), but the position is given relative to `self.start`,
+    /// i.e. `span.split_at_rel(offs)` ⇔ `span.split_at(span.start() + offs)`
+    pub fn split_at_rel(self, offs: usize) -> Result<(Self, Self), Self> {
+        if offs <= self.len {
+            let mid = self.start + offs;
+            Ok((
+                Span::new(self.start, mid),
+                Span::from_range(mid..self.end()),
+            ))
+        } else {
+            Err(self)
+        }
+    }
 }
 
 impl Into<Range<usize>> for Span {
