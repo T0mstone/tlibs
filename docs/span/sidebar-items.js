@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Span","A `Span` is basically like a `Range<usize>` but it has some additional methods and functionality"]]});
+initSidebarItems({"struct":[["Span","A `Span` is basically like a `Range<usize>` but it has some additional methods and functionality"],["Spanned",""]]});
