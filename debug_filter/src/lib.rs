@@ -180,10 +180,8 @@ impl<'a, P: FilterParser> Eq for Filters<'a, P> {}
 
 /// Like [`Filters`](struct.Filters.html), but owns the data its keys are from
 pub struct OwningFilters<P: FilterParser = DefaultFilterParser> {
-    /// A map of `filter -> allowed`
-    pub filters: HashMap<*const str, bool>,
-    /// The `allowed` value for all filters not in `self.filters`
-    pub default: bool,
+    filters: HashMap<*const str, bool>,
+    default: bool,
     _container: String,
     _marker: PhantomData<P>,
 }

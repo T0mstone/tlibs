@@ -365,8 +365,6 @@
 <span id="365">365</span>
 <span id="366">366</span>
 <span id="367">367</span>
-<span id="368">368</span>
-<span id="369">369</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # Debug Filters</span>
 <span class="doccomment">//!</span>
@@ -550,10 +548,8 @@
 
 <span class="doccomment">/// Like [`Filters`](struct.Filters.html), but owns the data its keys are from</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OwningFilters</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">FilterParser</span> <span class="op">=</span> <span class="ident">DefaultFilterParser</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// A map of `filter -&gt; allowed`</span>
-    <span class="kw">pub</span> <span class="ident">filters</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">*</span><span class="kw">const</span> <span class="ident">str</span>, <span class="ident">bool</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// The `allowed` value for all filters not in `self.filters`</span>
-    <span class="kw">pub</span> <span class="ident">default</span>: <span class="ident">bool</span>,
+    <span class="ident">filters</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="kw-2">*</span><span class="kw">const</span> <span class="ident">str</span>, <span class="ident">bool</span><span class="op">&gt;</span>,
+    <span class="ident">default</span>: <span class="ident">bool</span>,
     <span class="ident">_container</span>: <span class="ident">String</span>,
     <span class="ident">_marker</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>,
 }
