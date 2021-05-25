@@ -1,15 +1,3 @@
 [workspace]
-members = [
-    "bi_result",
-    "cargo_pkg_info",
-    "debug_filter",
-    "direction",
-    "growable_iter",
-    "infinite_iterators",
-    "map_range",
-    "nonempty_vec",
-    "some_macros",
-    "span",
-    "type_list",
-    "vec_like",
-]
+members = ["*"]
+exclude = [".git", ".idea", "target", "docs"]
