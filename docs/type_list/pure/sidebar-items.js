@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["Nil",""]],"struct":[["Cons",""]],"trait":[["AppendType",""],["TypeList",""]],"type":[["Append",""]]});
